@@ -16,4 +16,8 @@ public class View {
         }
     }
 
+    public static void writeResult(int result) {
+        System.out.printf((WRITE_RESULT_FORMAT), result);
+    }
+
 }
