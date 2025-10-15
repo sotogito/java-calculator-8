@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 
 public class Calculator {
     private static final Pattern CUSTOM_DELIMITER_PATTERN = Pattern.compile("^//(.)\\\\n(.*)$");
+    private static final List<String> BASIC_DELIMITERS = List.of(",", ";");
+    private static final String ESCAPE_CHARACTER = "\\";
+    private static final List<String> META_CHARACTERS = new ArrayList<>(
+            List.of("*", "^", "$", ".", "+", "?", "|", "\\", "[", "]", "{", "}", "(", ")"));
 
     public void calculate() {
         String stringExpression = View.readStringExpression();
@@ -16,8 +20,6 @@ public class Calculator {
     }
 
     private int getResult(String stringExpression) {
-
-        System.out.println(stringExpression);
         if (stringExpression != null && stringExpression.isEmpty()) {
             return 0;
         }
@@ -30,6 +32,9 @@ public class Calculator {
             String customDelimiter = matcher.group(1);
             stringExpression = matcher.group(2);
 
+            if (META_CHARACTERS.contains(customDelimiter)) {
+                customDelimiter = ESCAPE_CHARACTER + customDelimiter;
+            }
             delimiters = List.of(customDelimiter);
         } else {
             delimiters = List.of(",", ";");
@@ -48,9 +53,7 @@ public class Calculator {
             }
         }
 
-        return numbers.stream()
-                .mapToInt(Integer::intValue)
-                .sum();
+        return numbers.stream().mapToInt(Integer::intValue).sum();
     }
 
 }
