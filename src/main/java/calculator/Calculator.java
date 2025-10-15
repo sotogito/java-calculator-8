@@ -2,15 +2,14 @@ package calculator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Calculator {
-    private static final Pattern CUSTOM_DELIMITER_PATTERN = Pattern.compile("^//(.)\\\\n(.*)$");
-    private static final List<String> BASIC_DELIMITERS = List.of(",", ";");
-    private static final String ESCAPE_CHARACTER = "\\";
-    private static final List<String> META_CHARACTERS = new ArrayList<>(
-            List.of("*", "^", "$", ".", "+", "?", "|", "\\", "[", "]", "{", "}", "(", ")"));
+    private final DelimiterMatcher delimiterMatcher;
+
+    public Calculator() {
+        this.delimiterMatcher = new DelimiterMatcher();
+    }
+
 
     public void calculate() {
         String stringExpression = View.readStringExpression();
@@ -23,28 +22,22 @@ public class Calculator {
         if (stringExpression != null && stringExpression.isEmpty()) {
             return 0;
         }
-        List<String> delimiters = new ArrayList<>();
+        CalculatedValueDto calculatedValue = delimiterMatcher.match(stringExpression);
+        stringExpression = calculatedValue.expression();
+
+        validatePositiveNumber(stringExpression);
+        List<Integer> numbers = getNumbers(calculatedValue);
+
+        return numbers.stream().mapToInt(Integer::intValue).sum();
+    }
+
+    private List<Integer> getNumbers(CalculatedValueDto calculatedValue) {
         List<Integer> numbers = new ArrayList<>();
 
-        Matcher matcher = CUSTOM_DELIMITER_PATTERN.matcher(stringExpression);
+        String delimiter = calculatedValue.delimiter();
+        String stringExpression = calculatedValue.expression();
 
-        if (matcher.matches()) {
-            String customDelimiter = matcher.group(1);
-            stringExpression = matcher.group(2);
-
-            if (META_CHARACTERS.contains(customDelimiter)) {
-                customDelimiter = ESCAPE_CHARACTER + customDelimiter;
-            }
-            delimiters = List.of(customDelimiter);
-        } else {
-            delimiters = List.of(",", ";");
-        }
-
-        if (stringExpression.contains("-") || stringExpression.contains(".")) {
-            throw new IllegalArgumentException();
-        }
-
-        String[] splitNumbers = stringExpression.split(String.join("|", delimiters));
+        String[] splitNumbers = stringExpression.split(delimiter);
         for (String split : splitNumbers) {
             try {
                 numbers.add(Integer.parseInt(split));
@@ -52,8 +45,13 @@ public class Calculator {
                 throw new IllegalArgumentException();
             }
         }
+        return numbers;
+    }
 
-        return numbers.stream().mapToInt(Integer::intValue).sum();
+    private void validatePositiveNumber(String stringExpression) {
+        if (stringExpression.contains("-") || stringExpression.contains(".")) {
+            throw new IllegalArgumentException();
+        }
     }
 
 }
