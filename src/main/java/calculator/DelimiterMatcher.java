@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class DelimiterMatcher {
     private static final Pattern CUSTOM_DELIMITER_PATTERN = Pattern.compile("^//(.)\\\\n(.*)$");
-    private static final List<String> BASIC_DELIMITERS = List.of(",", ";");
+    private static final List<String> BASIC_DELIMITERS = List.of(",", ":");
     private static final String ESCAPE_CHARACTER = "\\";
     private static final List<String> META_CHARACTERS = new ArrayList<>(
             List.of("*", "^", "$", ".", "+", "?", "|", "\\", "[", "]", "{", "}", "(", ")"));
