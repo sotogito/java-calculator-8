@@ -12,7 +12,7 @@ public class View {
         try {
             System.out.print(READ_STRING_EXPRESSION);
 
-            return Console.readLine();
+            return Console.readLine().trim();
         } catch (NullPointerException e) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
