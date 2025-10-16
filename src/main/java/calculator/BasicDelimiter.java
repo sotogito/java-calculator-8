@@ -14,7 +14,7 @@ public enum BasicDelimiter {
     }
 
 
-    public static String getDelimiterSplitRegexp() {
+    public static String getDelimiterSplitRegex() {
         List<String> regexps = new ArrayList<>();
 
         for (BasicDelimiter basicDelimiter : BasicDelimiter.values()) {

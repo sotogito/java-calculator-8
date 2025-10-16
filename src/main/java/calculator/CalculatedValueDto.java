@@ -1,7 +1,7 @@
 package calculator;
 
 public record CalculatedValueDto(
-        String delimiter,
+        String delimiterRegex,
         String expression
 ) {
 }

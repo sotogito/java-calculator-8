@@ -25,7 +25,7 @@ public class DelimiterResolver {
 
             return new CalculatedValueDto(customDelimiter, stringExpression);
         }
-        String basicDelimiter = BasicDelimiter.getDelimiterSplitRegexp();
+        String basicDelimiter = BasicDelimiter.getDelimiterSplitRegex();
         return new CalculatedValueDto(basicDelimiter, stringExpression);
     }
 
