@@ -24,10 +24,10 @@ public class DelimiterResolver {
                 customDelimiter = getEscapedMetaDelimiter(customDelimiter);
             }
 
-            return new CalculatedValueDto(customDelimiter, stringExpression);
+            return new CalculatedValueDto(true, customDelimiter, stringExpression);
         }
         String basicDelimiter = BasicDelimiter.getDelimiterSplitRegex();
-        return new CalculatedValueDto(basicDelimiter, stringExpression);
+        return new CalculatedValueDto(false, basicDelimiter, stringExpression);
     }
 
     private String getEscapedMetaDelimiter(String metaCustomDelimiter) {

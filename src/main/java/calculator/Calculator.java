@@ -16,7 +16,7 @@ public class Calculator {
             return 0;
         }
         CalculatedValueDto calculatedValue = delimiterResolver.resolve(stringExpression);
-        validatePositiveNumber(calculatedValue.expression());
+        validatePositiveNumber(calculatedValue);
 
         List<Integer> numbers = getNumbers(calculatedValue);
 
@@ -42,9 +42,15 @@ public class Calculator {
         return numbers;
     }
 
-    /// 커스텀으로 .을 사용했을때도 예외처리됨
-    private void validatePositiveNumber(String stringExpression) {
-        if (stringExpression.contains("-") || stringExpression.contains(".")) {
+    private void validatePositiveNumber(CalculatedValueDto calculatedValue) {
+        if (calculatedValue.isCustomDelimiter()) {
+            String customDelimiter = calculatedValue.delimiterRegex();
+            if (customDelimiter.equals("-") || customDelimiter.equals(".")) {
+                return;
+            }
+        }
+        String expression = calculatedValue.expression();
+        if (expression.contains("-") || expression.contains(".")) {
             throw new IllegalArgumentException("양수만 계산 가능합니다.");
         }
     }
