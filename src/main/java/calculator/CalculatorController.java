@@ -9,7 +9,7 @@ public class CalculatorController {
 
     public void calculate() {
         String stringExpression = View.readStringExpression();
-        int result = calculator.calculate(stringExpression);
+        Double result = calculator.calculate(stringExpression);
 
         View.writeResult(result);
     }

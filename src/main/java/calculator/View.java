@@ -1,10 +1,12 @@
 package calculator;
 
 import camp.nextstep.edu.missionutils.Console;
+import java.text.DecimalFormat;
 
 public class View {
     private final static String READ_STRING_EXPRESSION = "덧셈할 문자열을 입력해 주세요.\n";
-    private final static String WRITE_RESULT_FORMAT = "결과 : %d\n";
+    private final static String WRITE_RESULT_FORMAT = "결과 : ";
+    private final static String DECIMAL_FORMAT = "#.######";
 
     public static String readStringExpression() {
         try {
@@ -16,8 +18,10 @@ public class View {
         }
     }
 
-    public static void writeResult(int result) {
-        System.out.printf((WRITE_RESULT_FORMAT), result);
+    public static void writeResult(Double result) {
+        DecimalFormat df = new DecimalFormat(DECIMAL_FORMAT);
+
+        System.out.println(WRITE_RESULT_FORMAT + df.format(result));
     }
 
 }
