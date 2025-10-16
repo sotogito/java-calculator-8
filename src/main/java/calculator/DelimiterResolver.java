@@ -12,7 +12,7 @@ public class DelimiterResolver {
             List.of("*", "^", "$", ".", "+", "?", "|", "\\", "[", "]", "{", "}", "(", ")"));
 
 
-    public CalculatedValueDto match(String stringExpression) {
+    public CalculatedValueDto resolve(String stringExpression) {
         Matcher matcher = CUSTOM_DELIMITER_PATTERN.matcher(stringExpression);
 
         if (matcher.matches()) {

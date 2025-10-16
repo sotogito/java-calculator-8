@@ -15,7 +15,7 @@ public class Calculator {
         if (stringExpression != null && stringExpression.isEmpty()) {
             return 0;
         }
-        CalculatedValueDto calculatedValue = delimiterResolver.match(stringExpression);
+        CalculatedValueDto calculatedValue = delimiterResolver.resolve(stringExpression);
 
         validatePositiveNumber(calculatedValue.expression());
         List<Integer> numbers = getNumbers(calculatedValue);
