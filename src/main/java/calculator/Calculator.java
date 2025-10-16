@@ -28,7 +28,7 @@ public class Calculator {
     private List<Integer> getNumbers(CalculatedValueDto calculatedValue) {
         List<Integer> numbers = new ArrayList<>();
 
-        String delimiter = calculatedValue.delimiter();
+        String delimiter = calculatedValue.delimiterRegex();
         String stringExpression = calculatedValue.expression();
 
         String[] splitNumbers = stringExpression.split(delimiter);
