@@ -16,8 +16,8 @@ public class Calculator {
             return 0;
         }
         CalculatedValueDto calculatedValue = delimiterResolver.resolve(stringExpression);
-
         validatePositiveNumber(calculatedValue.expression());
+
         List<Integer> numbers = getNumbers(calculatedValue);
 
         return numbers.stream()
@@ -36,15 +36,16 @@ public class Calculator {
             try {
                 numbers.add(Integer.parseInt(split));
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("잘못된 구분자를 사용했습니다.");
             }
         }
         return numbers;
     }
 
+    /// 커스텀으로 .을 사용했을때도 예외처리됨
     private void validatePositiveNumber(String stringExpression) {
         if (stringExpression.contains("-") || stringExpression.contains(".")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("양수만 계산 가능합니다.");
         }
     }
 

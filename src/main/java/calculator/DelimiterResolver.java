@@ -36,7 +36,7 @@ public class DelimiterResolver {
 
     private void validateDelimiterNotNumber(String delimiterRegex) {
         if (delimiterRegex.matches("\\d+")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("커스텀 구분자로 숫자를 사용할 수 없습니다.");
         }
     }
 

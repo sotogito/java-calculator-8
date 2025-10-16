@@ -12,7 +12,7 @@ public class View {
 
             return Console.readLine();
         } catch (NullPointerException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("잘못된 입력입니다.");
         }
     }
 
