@@ -19,6 +19,7 @@ public class DelimiterResolver {
             String customDelimiter = matcher.group(1);
             stringExpression = matcher.group(2);
 
+            validateDelimiterNotNumber(customDelimiter);
             if (META_CHARACTERS.contains(customDelimiter)) {
                 customDelimiter = getEscapedMetaDelimiter(customDelimiter);
             }
@@ -31,6 +32,12 @@ public class DelimiterResolver {
 
     private String getEscapedMetaDelimiter(String metaCustomDelimiter) {
         return ESCAPE_CHARACTER + metaCustomDelimiter;
+    }
+
+    private void validateDelimiterNotNumber(String delimiterRegex) {
+        if (delimiterRegex.matches("\\d+")) {
+            throw new IllegalArgumentException();
+        }
     }
 
 }
