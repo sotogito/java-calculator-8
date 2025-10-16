@@ -4,31 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculator {
-    private final DelimiterMatcher delimiterMatcher;
+    private final DelimiterResolver delimiterResolver;
 
     public Calculator() {
-        this.delimiterMatcher = new DelimiterMatcher();
+        this.delimiterResolver = new DelimiterResolver();
     }
 
 
-    public void calculate() {
-        String stringExpression = View.readStringExpression();
-        int result = getResult(stringExpression);
-
-        View.writeResult(result);
-    }
-
-    private int getResult(String stringExpression) {
+    public int calculate(String stringExpression) {
         if (stringExpression != null && stringExpression.isEmpty()) {
             return 0;
         }
-        CalculatedValueDto calculatedValue = delimiterMatcher.match(stringExpression);
-        stringExpression = calculatedValue.expression();
+        CalculatedValueDto calculatedValue = delimiterResolver.match(stringExpression);
 
-        validatePositiveNumber(stringExpression);
+        validatePositiveNumber(calculatedValue.expression());
         List<Integer> numbers = getNumbers(calculatedValue);
 
-        return numbers.stream().mapToInt(Integer::intValue).sum();
+        return numbers.stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     private List<Integer> getNumbers(CalculatedValueDto calculatedValue) {
