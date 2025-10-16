@@ -20,6 +20,7 @@ public class DelimiterResolver {
             stringExpression = matcher.group(2);
 
             validateDelimiterNotNumber(customDelimiter);
+            validateDelimiterNotDecimalPoint(customDelimiter);
             if (META_CHARACTERS.contains(customDelimiter)) {
                 customDelimiter = getEscapedMetaDelimiter(customDelimiter);
             }
@@ -37,6 +38,12 @@ public class DelimiterResolver {
     private void validateDelimiterNotNumber(String delimiterRegex) {
         if (delimiterRegex.matches("\\d+")) {
             throw new IllegalArgumentException("커스텀 구분자로 숫자를 사용할 수 없습니다.");
+        }
+    }
+
+    private void validateDelimiterNotDecimalPoint(String delimiterRegex) {
+        if (delimiterRegex.equals(".")) {
+            throw new IllegalArgumentException("커스텀 구분자로 소수점을 사용할 수 없습니다.");
         }
     }
 
