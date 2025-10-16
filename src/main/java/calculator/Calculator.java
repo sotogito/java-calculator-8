@@ -18,9 +18,7 @@ public class Calculator {
         CalculatedValueDto calculatedValue = delimiterResolver.resolve(stringExpression);
         List<Double> numbers = getNumbers(calculatedValue);
 
-        return numbers.stream()
-                .mapToDouble(Double::doubleValue)
-                .sum();
+        return numbers.stream().mapToDouble(Double::doubleValue).sum();
     }
 
     private List<Double> getNumbers(CalculatedValueDto calculatedValue) {
@@ -29,7 +27,7 @@ public class Calculator {
         String delimiter = calculatedValue.delimiterRegex();
         String stringExpression = calculatedValue.expression();
 
-        String[] splitNumbers = stringExpression.split(delimiter);
+        String[] splitNumbers = stringExpression.split(delimiter, -1);
         for (String split : splitNumbers) {
             try {
                 double number = Double.parseDouble(split);
