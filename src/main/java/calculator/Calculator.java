@@ -53,7 +53,8 @@ public class Calculator {
     }
 
     private void validateValidNumber(double result) {
-        if (Double.isNaN(result) || Double.isInfinite(result)) {
+        if (result < 0.0
+                || Double.isNaN(result) || Double.isInfinite(result)) {
             throw new IllegalArgumentException("계산 가능한 범위를 초과했습니다.");
         }
     }
