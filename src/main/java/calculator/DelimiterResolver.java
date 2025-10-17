@@ -16,7 +16,10 @@ public class DelimiterResolver {
         Matcher customDelimiterMatcher = CUSTOM_DELIMITER_PATTERN.matcher(stringExpression);
 
         if (customDelimiterMatcher.matches()) {
-            return processCustomDelimiter(customDelimiterMatcher);
+            return processCustomDelimiter(
+                    customDelimiterMatcher.group(1),
+                    customDelimiterMatcher.group(2)
+            );
         }
         return processBasicDelimiter(stringExpression);
     }
@@ -27,11 +30,7 @@ public class DelimiterResolver {
         return new CalculatedValueDto(false, basicDelimiter, stringExpression);
     }
 
-    private CalculatedValueDto processCustomDelimiter(Matcher customDelimiterMatcher) {
-        String stringExpression;
-        String customDelimiter = customDelimiterMatcher.group(1);
-        stringExpression = customDelimiterMatcher.group(2);
-
+    private CalculatedValueDto processCustomDelimiter(String customDelimiter, String stringExpression) {
         validateDelimiterNotNumber(customDelimiter);
         validateDelimiterNotDecimalPoint(customDelimiter);
         if (META_CHARACTERS.contains(customDelimiter)) {
