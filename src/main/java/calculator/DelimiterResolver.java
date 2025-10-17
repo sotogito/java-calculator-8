@@ -13,11 +13,11 @@ public class DelimiterResolver {
 
 
     public CalculatedValueDto resolve(String stringExpression) {
-        Matcher matcher = CUSTOM_DELIMITER_PATTERN.matcher(stringExpression);
+        Matcher customDelimiterMatcher = CUSTOM_DELIMITER_PATTERN.matcher(stringExpression);
 
-        if (matcher.matches()) {
-            String customDelimiter = matcher.group(1);
-            stringExpression = matcher.group(2);
+        if (customDelimiterMatcher.matches()) {
+            String customDelimiter = customDelimiterMatcher.group(1);
+            stringExpression = customDelimiterMatcher.group(2);
 
             validateDelimiterNotNumber(customDelimiter);
             validateDelimiterNotDecimalPoint(customDelimiter);
