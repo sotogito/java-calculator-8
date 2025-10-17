@@ -11,7 +11,7 @@ public class Calculator {
     }
 
 
-    public Double calculate(String stringExpression) {
+    public double calculate(String stringExpression) {
         if (stringExpression.isEmpty()) {
             return 0.0;
         }

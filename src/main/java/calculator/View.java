@@ -18,7 +18,7 @@ public class View {
         }
     }
 
-    public static void writeResult(Double result) {
+    public static void writeResult(double result) {
         DecimalFormat df = new DecimalFormat(DECIMAL_FORMAT);
 
         System.out.println(WRITE_RESULT_FORMAT + df.format(result));
