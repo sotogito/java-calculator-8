@@ -16,19 +16,29 @@ public class DelimiterResolver {
         Matcher customDelimiterMatcher = CUSTOM_DELIMITER_PATTERN.matcher(stringExpression);
 
         if (customDelimiterMatcher.matches()) {
-            String customDelimiter = customDelimiterMatcher.group(1);
-            stringExpression = customDelimiterMatcher.group(2);
-
-            validateDelimiterNotNumber(customDelimiter);
-            validateDelimiterNotDecimalPoint(customDelimiter);
-            if (META_CHARACTERS.contains(customDelimiter)) {
-                customDelimiter = getEscapedMetaDelimiter(customDelimiter);
-            }
-
-            return new CalculatedValueDto(true, customDelimiter, stringExpression);
+            return processCustomDelimiter(customDelimiterMatcher);
         }
+        return processBasicDelimiter(stringExpression);
+    }
+
+    private CalculatedValueDto processBasicDelimiter(String stringExpression) {
         String basicDelimiter = BasicDelimiter.getDelimiterSplitRegex();
+
         return new CalculatedValueDto(false, basicDelimiter, stringExpression);
+    }
+
+    private CalculatedValueDto processCustomDelimiter(Matcher customDelimiterMatcher) {
+        String stringExpression;
+        String customDelimiter = customDelimiterMatcher.group(1);
+        stringExpression = customDelimiterMatcher.group(2);
+
+        validateDelimiterNotNumber(customDelimiter);
+        validateDelimiterNotDecimalPoint(customDelimiter);
+        if (META_CHARACTERS.contains(customDelimiter)) {
+            customDelimiter = getEscapedMetaDelimiter(customDelimiter);
+        }
+
+        return new CalculatedValueDto(true, customDelimiter, stringExpression);
     }
 
     private String getEscapedMetaDelimiter(String metaCustomDelimiter) {
